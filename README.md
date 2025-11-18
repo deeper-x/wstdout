@@ -1,13 +1,27 @@
 Usage:
 
+Case 1 - Calling its interface:
 ```zig
 const wstdout = @import("wstdout");
 
 pub fn main() !void {
-    // Getting a writer to standard output, whose type is *std.Io.Writer
-    var w = wstdout.get_writer();
+    var w = wstdout.Writer.init(1024);
 
-    // Write to standard output
+    try w.interface.print("test library\n", .{});
+    try w.interface.flush();
+
+    // Output:
+    // test library
+}
+```
+
+Case 2 - Calling it directly:
+```zig
+const wstdout = @import("wstdout");
+
+pub fn main() !void {
+    var w = wstdout.Writer.create(1024);
+
     try w.print("test library\n", .{});
     try w.flush();
 
