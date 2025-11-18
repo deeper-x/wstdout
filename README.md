@@ -49,11 +49,12 @@ Test:
 ```sh
 $ zig build test --summary all
 
-Build Summary: 5/5 steps succeeded; 1/1 tests passed
+Build Summary: 5/5 steps succeeded; 2/2 tests passed
 test success
-├─ run test 1 passed 257us MaxRSS:2M
-│  └─ compile test Debug native cached 9ms MaxRSS:38M
-└─ run test success 136us MaxRSS:2M
-   └─ compile test Debug native success 303ms MaxRSS:120M
+├─ run test 2 passed 279us MaxRSS:2M
+│  └─ compile test Debug native success 345ms MaxRSS:121M
+└─ run test success 145us MaxRSS:2M
+   └─ compile test Debug native success 372ms MaxRSS:122M
+
 
 ```
