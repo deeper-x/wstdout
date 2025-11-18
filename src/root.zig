@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const Writer = struct {
+pub const Writer = struct {
     interface: *std.Io.Writer,
 
     pub fn init(comptime S: usize) @This() {
