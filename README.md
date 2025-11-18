@@ -21,12 +21,12 @@ const wstdout = @import("wstdout");
 
 pub fn main() !void {
     var w = wstdout.Writer.create(1024);
-
-    try w.print("test library\n", .{});
+    
+    try w.print("test library again\n", .{});
     try w.flush();
 
     // Output:
-    // test library
+    // test library again
 }
 ```
 
