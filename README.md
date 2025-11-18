@@ -1,11 +1,16 @@
 Usage:
 
 ```zig
+const wstdout = @import("wstdout");
+
 pub fn main() !void {
     var w = wstdout.get_writer();
 
     try w.print("test library\n", .{});
     try w.flush();
+    // OUTPUT:
+    // test library
+    //
 }
 ```
 
