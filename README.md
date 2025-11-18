@@ -4,13 +4,15 @@ Usage:
 const wstdout = @import("wstdout");
 
 pub fn main() !void {
-    var w = wstdout.get_writer();
+    // Get a writer to standard output, type is *std.Io.Writer
+    var w: *std.Io.Writer = wstdout.get_writer();
 
+    // Write to standard output
     try w.print("test library\n", .{});
     try w.flush();
-    // OUTPUT:
+
+    // Output:
     // test library
-    //
 }
 ```
 
