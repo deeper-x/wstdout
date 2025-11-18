@@ -4,8 +4,8 @@ Usage:
 const wstdout = @import("wstdout");
 
 pub fn main() !void {
-    // Get a writer to standard output, type is *std.Io.Writer
-    var w: *std.Io.Writer = wstdout.get_writer();
+    // Getting a writer to standard output, whose type is *std.Io.Writer
+    var w = wstdout.get_writer();
 
     // Write to standard output
     try w.print("test library\n", .{});
