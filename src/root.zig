@@ -7,3 +7,11 @@ pub fn get_writer() *std.Io.Writer {
 
     return &writer.interface;
 }
+
+test "write_test" {
+    var w = get_writer();
+    const got = try w.write("1234567890");
+    const expected: usize = 10;
+
+    try std.testing.expectEqual(expected, got);
+}

@@ -1,0 +1,38 @@
+Usage:
+
+```zig
+pub fn main() !void {
+    var w = wstdout.get_writer();
+
+    try w.print("test library\n", .{});
+    try w.flush();
+}
+```
+
+Install:
+```sh
+zig fetch --save https://github.com/deeper-x/wstdout/archive/refs/heads/main.zip
+```
+
+Setup build.zig:
+```zig
+const wstdout = b.dependency("wstdout", .{
+    .target = target,
+    .optimize = optimize,
+});
+
+exe.root_module.addImport("wstdout", wstdout.module("wstdout"));
+```
+
+Test:
+```sh
+$ zig build test --summary all
+
+Build Summary: 5/5 steps succeeded; 1/1 tests passed
+test success
+├─ run test 1 passed 257us MaxRSS:2M
+│  └─ compile test Debug native cached 9ms MaxRSS:38M
+└─ run test success 136us MaxRSS:2M
+   └─ compile test Debug native success 303ms MaxRSS:120M
+
+```
