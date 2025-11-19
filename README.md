@@ -1,3 +1,5 @@
+wstdout - A library for writing wide character strings to standard output in Zig.
+
 Usage:
 
 Case 1 - Calling its interface:
