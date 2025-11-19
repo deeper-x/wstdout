@@ -53,10 +53,10 @@ $ zig build test --summary all
 
 Build Summary: 5/5 steps succeeded; 2/2 tests passed
 test success
-├─ run test 2 passed 279us MaxRSS:2M
-│  └─ compile test Debug native success 345ms MaxRSS:121M
-└─ run test success 145us MaxRSS:2M
-   └─ compile test Debug native success 372ms MaxRSS:122M
+├─ run test 2 passed 232us MaxRSS:2M
+│  └─ compile test Debug native cached 12ms MaxRSS:37M
+└─ run test success 193us MaxRSS:2M
+   └─ compile test Debug native cached 12ms MaxRSS:37M
 
 
 ```
