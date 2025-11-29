@@ -7,28 +7,19 @@ Case 1 - Calling its interface:
 const wstdout = @import("wstdout");
 
 pub fn main() !void {
-    var w = wstdout.Writer.init(1024);
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
+
+    var w = wstdout.Writer.init(allocator, 1024);
+    defer w.deinit();
 
     try w.interface.print("test library\n", .{});
     try w.interface.flush();
 
     // Output:
     // test library
-}
-```
-
-Case 2 - Calling it directly:
-```zig
-const wstdout = @import("wstdout");
-
-pub fn main() !void {
-    var w = wstdout.Writer.create(1024);
-    
-    try w.print("test library again\n", .{});
-    try w.flush();
-
-    // Output:
-    // test library again
 }
 ```
 
@@ -49,14 +40,13 @@ exe.root_module.addImport("wstdout", wstdout.module("wstdout"));
 
 Test:
 ```sh
-$ zig build test --summary all
+zig build test --summary all
 
-Build Summary: 5/5 steps succeeded; 2/2 tests passed
+Build Summary: 5/5 steps succeeded; 1/1 tests passed
 test success
-├─ run test 2 passed 232us MaxRSS:2M
-│  └─ compile test Debug native cached 12ms MaxRSS:37M
-└─ run test success 193us MaxRSS:2M
-   └─ compile test Debug native cached 12ms MaxRSS:37M
-
+├─ run test 1 passed 270us MaxRSS:2M
+│  └─ compile test Debug native success 367ms MaxRSS:120M
+└─ run test success 197us MaxRSS:2M
+   └─ compile test Debug native success 387ms MaxRSS:120M
 
 ```

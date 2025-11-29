@@ -1,39 +1,45 @@
 const std = @import("std");
 
 pub const Writer = struct {
-    interface: *std.Io.Writer,
+    allocator: std.mem.Allocator,
+    buffer: []u8,
+    writer: std.fs.File.Writer,
 
-    pub fn init(comptime S: usize) @This() {
-        var buffer: [S]u8 = undefined;
-
-        var writer = std.fs.File.stdout().writer(&buffer);
+    pub fn init(allocator: std.mem.Allocator, comptime S: usize) !@This() {
+        const buffer = try allocator.alloc(u8, S);
 
         return .{
-            .interface = &writer.interface,
+            .writer = std.fs.File.stdout().writer(buffer),
+            .allocator = allocator,
+            .buffer = buffer,
         };
     }
 
-    pub fn create(comptime S: usize) *std.Io.Writer {
-        var buffer: [S]u8 = undefined;
-        var writer = std.fs.File.stdout().writer(&buffer);
+    pub fn interface(self: *@This()) *std.io.Writer {
+        return &self.writer.interface;
+    }
 
-        return &writer.interface;
+    pub fn flush(self: *@This()) !void {
+        try self.writer.interface.flush();
+    }
+
+    pub fn deinit(self: *@This()) void {
+        self.allocator.free(self.buffer);
     }
 };
 
 test "write_test_init" {
-    var w = Writer.init(1024);
+    const allocator = std.testing.allocator;
 
-    const got = try w.interface.write("1234567890");
+    var w = try Writer.init(allocator, 2048);
+    defer w.deinit();
+
+    const stdout = &w.writer.interface;
+
+    const got = try stdout.write("hello test");
+    // try stdout.flush(); <-- no flush required in testing
+
     const expected: usize = 10;
-
-    try std.testing.expectEqual(expected, got);
-}
-
-test "write_test_create" {
-    var w = Writer.create(1024);
-    const got = try w.write("1234567");
-    const expected = 7;
 
     try std.testing.expectEqual(expected, got);
 }
