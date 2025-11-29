@@ -15,7 +15,7 @@ pub const Writer = struct {
         };
     }
 
-    pub fn interface(self: *@This()) *std.io.Writer {
+    pub fn getStdOut(self: *@This()) *std.io.Writer {
         return &self.writer.interface;
     }
 
@@ -35,7 +35,7 @@ test "write_test_init" {
     var w = try Writer.init(allocator, size);
     defer w.deinit();
 
-    const stdout = w.interface();
+    const stdout = w.getStdOut();
 
     const got = try stdout.write("hello test");
     // try stdout.flush(); <-- no flush required in testing

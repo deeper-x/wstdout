@@ -2,7 +2,7 @@ wstdout - A library for writing wide character strings to standard output in Zig
 
 Usage:
 
-Case 1 - Calling its interface:
+Calling its interface via getStdOut():
 ```zig
 const wstdout = @import("wstdout");
 
@@ -15,7 +15,7 @@ pub fn main() !void {
     var w = wstdout.Writer.init(allocator, 1024);
     defer w.deinit();
 
-    const stdout = w.interface();
+    const stdout = w.getStdOut();
 
     try stdout.print("test library\n", .{});
     try stdout.flush();
