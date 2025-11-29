@@ -30,8 +30,9 @@ pub const Writer = struct {
 
 test "write_test_init" {
     const allocator = std.testing.allocator;
+    const size: usize = 10;
 
-    var w = try Writer.init(allocator, 2048);
+    var w = try Writer.init(allocator, size);
     defer w.deinit();
 
     const stdout = w.interface();
@@ -39,7 +40,5 @@ test "write_test_init" {
     const got = try stdout.write("hello test");
     // try stdout.flush(); <-- no flush required in testing
 
-    const expected: usize = 10;
-
-    try std.testing.expectEqual(expected, got);
+    try std.testing.expectEqual(size, got);
 }
