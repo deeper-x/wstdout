@@ -12,7 +12,7 @@ pub fn main() !void {
 
     const allocator = arena.allocator();
 
-    var w = wstdout.Writer.init(allocator, 1024);
+    var w = try wstdout.Writer.init(allocator, 1024);
     defer w.deinit();
 
     const stdout = w.interface();
