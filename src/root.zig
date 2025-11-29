@@ -34,7 +34,7 @@ test "write_test_init" {
     var w = try Writer.init(allocator, 2048);
     defer w.deinit();
 
-    const stdout = &w.writer.interface;
+    const stdout = w.interface();
 
     const got = try stdout.write("hello test");
     // try stdout.flush(); <-- no flush required in testing

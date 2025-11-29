@@ -15,8 +15,10 @@ pub fn main() !void {
     var w = wstdout.Writer.init(allocator, 1024);
     defer w.deinit();
 
-    try w.interface.print("test library\n", .{});
-    try w.interface.flush();
+    const stdout = w.interface();
+
+    try stdout.print("test library\n", .{});
+    try stdout.flush();
 
     // Output:
     // test library
